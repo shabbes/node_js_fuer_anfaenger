@@ -1,0 +1,7 @@
+{% extends "layouts:default.njk" %}
+{% from "book:form.njk" import bookForm %}
+
+{% block content %}
+<h2>Neues Buch anlegen</h2>
+{{ bookForm("/books", "POST", {}, authors, "Buch anlegen") }}
+{% endblock %}

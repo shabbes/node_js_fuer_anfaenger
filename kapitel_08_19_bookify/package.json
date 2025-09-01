@@ -1,0 +1,50 @@
+{
+  "name": "bookify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "dev": "nodemon src/index.js",
+    "dev:build": "docker compose -f docker-compose.yml up -d --build",
+    "dev:start": "docker compose -f docker-compose.yml up -d",
+    "dev:stop": "docker compose -f docker-compose.yml down"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "bottlejs": "^2.0.1",
+    "connect-redis": "^9.0.0",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "fs-extra": "^11.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "method-override": "^3.0.0",
+    "multer": "^2.0.1",
+    "nunjucks": "^3.2.4",
+    "pg": "^8.16.0",
+    "redis": "^5.5.6",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
+    "yamljs": "^0.3.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.2.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  }
+}

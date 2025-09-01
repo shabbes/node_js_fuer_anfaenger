@@ -1,0 +1,30 @@
+{% macro bookForm(actionUrl, httpMethod, book, authors, buttonText) %}
+<form method="POST" action="{{ actionUrl }}" {% if httpMethod == 'POST' %}enctype="multipart/form-data"{% endif %}>
+  <input type="hidden" name="_method" value="{{ httpMethod }}">
+  
+  <label for="title">Titel</label>
+  <input type="text" id="title" name="title" value="{{ book.title }}" required>
+
+  <label for="author">Autor</label>
+  <select id="author" name="authorId" required>
+    {% for author in authors %}
+      <option value="{{ author.id }}" {% if author.id == book.authorId %}selected{% endif %}>{{ author.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="isbn">ISBN</label>
+  <input type="text" id="isbn" name="isbn" value="{{ book.isbn }}" required>
+
+  <label for="description">Beschreibung</label>
+  <textarea id="description" name="description">{{ book.description }}</textarea>
+
+  <label for="publishedYear">Veröffentlichungsjahr</label>
+  <input type="number" id="publishedYear" name="publishedYear" value="{{ book.publishedYear }}">
+
+  {% if httpMethod == 'POST' %}
+    <input type="file" name="coverImage" accept="image/*" required>
+  {% endif %}
+
+  <button type="submit">{{ buttonText }}</button>
+</form>
+{% endmacro %}

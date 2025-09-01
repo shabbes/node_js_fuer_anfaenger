@@ -1,0 +1,12 @@
+{% macro formErrors(errors) %}
+{% if errors | length %}
+  <article class="pico-background-red-500">
+    <strong>Fehler</strong>
+    <ul>
+      {% for error in errors %}
+        <li class="pico-color-red-50">{{ error }}</li>
+      {% endfor %}
+    </ul>    
+  </article>
+{% endif %}
+{% endmacro %}

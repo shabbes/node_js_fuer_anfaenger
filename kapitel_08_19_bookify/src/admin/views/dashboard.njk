@@ -1,0 +1,53 @@
+{% extends "layouts:admin.njk" %}
+
+{% block stylesheet %}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.tiles article {
+  padding: 1rem;
+  border: 1px solid var(--pico-color-slate-300);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-color-slate-100);
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.tiles h3 {
+  font-size: 2rem;
+  margin: 0.5rem 0 0;
+}
+{% endblock %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<section>
+  <div class="tiles">
+    <article>
+      <header>Anzahl Bücher</header>
+      <h3>{{ stats.bookCount }}</h3>
+    </article>
+    <article>
+      <header>Anzahl Bewertungen</header>
+      <h3>{{ stats.reviewCount }}</h3>
+    </article>    
+    <article>
+      <header>Anzahl Benutzer</header>
+      <h3>{{ stats.userCount }}</h3>
+    </article>
+    <article>
+      <header>Admin-Konten</header>
+      <h3>{{ stats.adminCount }}</h3>
+    </article>    
+    <article>
+      <header>Anzahl Authoren</header>
+      <h3>{{ stats.authorCount }}</h3>
+    </article>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layouts:default.njk" %}
+{% from "error:form.njk" import formErrors %}
+
+{% block content %}
+{{ formErrors(errors) }}
+
+<form method="POST" action="/users/login">
+  <label for="email">E-Mail</label>
+  <input type="email" id="email" name="email" value="{{ fields.email }}" required>
+
+  <label for="password">Passwort</label>
+  <input type="password" id="password" name="password" value="{{ fields.password }}" required>
+
+  <button type="submit">Anmelden</button>
+</form>
+{% endblock %}

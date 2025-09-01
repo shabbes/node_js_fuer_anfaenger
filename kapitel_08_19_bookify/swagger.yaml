@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Bookify API
+  version: 1.0.0
+  description: API-Dokumentation für die Bookify-Anwendung
+servers:
+  - url: /api
+paths:
+  /books:
+    get:
+      summary: Alle Bücher auflisten
+      description: Gibt eine Liste aller verfügbaren Bücher zurück.
+      responses:
+        '200':
+          description: Eine Liste von Büchern
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+  /books/{id}:
+    get:
+      summary: Buch anhand der ID abrufen
+      description: Gibt ein einzelnes Buch zurück, das zur angegebenen ID gehört.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Die ID des gewünschten Buches
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ein einzelnes Buch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Eindeutige Kennung des Buches
+        title:
+          type: string
+          description: Titel des Buches
+        isbn:
+          type: string
+          description: Internationale Standardbuchnummer (ISBN)
+        description:
+          type: string
+          description: Inhaltsangabe oder Beschreibung des Buches
+        coverImage:
+          type: string
+          description: Dateiname oder URL des Buchcovers
+        publishedYear:
+          type: integer
+          description: Erscheinungsjahr des Buches

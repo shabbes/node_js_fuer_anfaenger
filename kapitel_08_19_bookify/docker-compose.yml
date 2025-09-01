@@ -1,0 +1,24 @@
+services:
+  postgresql:
+    container_name: bookify_database
+    image: postgres:17
+    restart: unless-stopped
+    volumes:
+      - './database/store:/var/lib/postgresql/data/'
+    ports:
+      - 54325:5432
+    environment:
+      POSTGRES_USER: bookify
+      POSTGRES_PASSWORD: bookify
+      POSTGRES_DB: bookify
+      PGUSER: postgres
+
+  redis:
+    container_name: bookify_redis
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - ./database/redis:/data
+    ports:
+      - 6379:6379
+    command: redis-server --protected-mode no

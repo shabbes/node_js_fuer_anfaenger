@@ -1,0 +1,75 @@
+{% extends "layouts:default.njk" %}
+
+{% block content %}
+<article>
+  <header>
+    <hgroup>
+      <h2>{{ book.title }}</h2>
+      <h3>von {{ book.author.name }}</h3>
+    </hgroup>
+  </header>
+
+  <figure>
+    {% if book.coverImage === null %}
+      <img src="https://placehold.co/400x600?text=Kein+Buchcover" alt="Platzhalterbild für {{ book.title }}">
+      <figcaption>Cover nicht verfügbar</figcaption>
+    {% else %}
+      <img src="/uploads/{{ book.coverImage }}" alt="{{ book.title }} Cover" />
+      <figcaption>{{ book.title }} Cover</figcaption>
+    {% endif %}  
+  </figure>
+
+  <dl>
+    <dt>ISBN</dt>
+    <dd>{{ book.isbn }}</dd>
+    <dt>Veröffentlicht</dt>
+    <dd>{{ book.publishedYear }}</dd>
+  </dl>
+
+  <p>{{ book.description or 'Keine Beschreibung vorhanden.' }}</p>
+
+  <section id="reviews">
+    <h3>Bewertungen</h3>
+
+    {% if isLoggedIn %}
+      <form method="POST" action="/reviews/{{ book.id }}">
+        <label for="rating">Bewertung:</label>
+        <select name="rating" id="rating" required>
+          <option value="1">1 Stern</option>
+          <option value="2">2 Sterne</option>
+          <option value="3">3 Sterne</option>
+          <option value="4">4 Sterne</option>
+          <option value="5">5 Sterne</option>
+        </select>
+
+        <label for="comment">Kommentar:</label>
+        <textarea name="comment" id="comment" rows="4"></textarea>
+
+        <button type="submit">Bewertung abgeben</button>
+      </form>
+    {% else %}
+      <article class="pico-background-grey-100">
+        Bitte melden Sie sich an um Kommentare zu verfassen: <br />
+        <a href="/users/login">Zur Anmeldung</a> 
+      </article>
+    {% endif %}
+
+    {% for review in book.reviews %}
+      <article>
+        <header>Bewertung von {{ review.user.name }} - {{ review.rating }} Sterne</header>
+        {{ review.comment }}        
+      </article>
+    {% endfor %}
+  </section>
+  
+  <footer>
+    <form method="POST" action="/books/{{ book.id }}" onsubmit="return confirm('Möchten Sie dieses Buch wirklich löschen?');">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit">Buch löschen</button>
+    </form>
+     <a href="/books/{{ book.id }}/edit" role="button" class="secondary">Editieren</a>
+    <a href="/books" role="button" class="secondary">Zurück zur Liste</a>
+
+  </footer>
+</article>
+{% endblock %}

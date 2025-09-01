@@ -1,0 +1,51 @@
+{% extends "layouts:default.njk" %}
+
+{% block content %}
+<h2>Bücherliste</h2>
+
+<form method="get" action="/books">
+  <label for="title">Buchtitel suchen</label>
+  <input type="text" id="title" name="title" placeholder="Buchtitel suchen" value="{{ query.title }}">
+  <button type="submit">Suchen</button>
+</form>
+
+<hr />
+
+{% if books.length %}
+  <section class="grid">
+    {% for book in books %}
+      <article>
+        <header>
+          <h3><a href="/books/{{ book.id }}">{{ book.title }}</a></h3>
+          <p><small>von {{ book.author.name }}</small></p>
+        </header>
+        <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <p><strong>Veröffentlicht:</strong> {{ book.publishedYear }}</p>
+        {% if book.description %}
+          <p>{{ book.description }}</p>
+        {% endif %}
+        <footer>
+          <a href="/books/{{ book.id }}" role="button">Details</a>
+        </footer>
+      </article>
+    {% endfor %}
+  </section>
+
+    <div class="pagination">
+    {% if page > 1 %}
+        <a href="/books?page={{ page - 1 }}&title={{ query.title }}">Vorherige</a>
+    {% endif %}
+    <span>Seite {{ page }} von {{ totalPages }}</span>
+    {% if page < totalPages %}
+        <a href="/books?page={{ page + 1 }}&title={{ query.title }}">Nächste</a>
+    {% endif %}
+    </div>  
+{% else %}
+  <p><em>Keine Bücher gefunden.</em></p>
+{% endif %}
+
+<hr />
+
+<a href="/books/create" role="button">Neues Buch anlegen</a>
+
+{% endblock %}

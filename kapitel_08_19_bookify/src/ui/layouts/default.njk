@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bookify{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.colors.min.css">    
+</head>
+<body>
+    <header class="container">
+        {% block header %}
+        <hgroup>
+            <h1>Bookify</h1>
+            <p>Ihre Online-Büchersammelung</p>
+        </hgroup>
+        {% endblock %}            
+        {% include "partials:navigation.njk" %}
+    </header>    
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    {% include "partials:footer.njk" %}
+</body>
+</html>

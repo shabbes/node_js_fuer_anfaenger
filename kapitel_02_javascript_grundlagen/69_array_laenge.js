@@ -1,0 +1,1 @@
+console.log(fruits.length); // 3

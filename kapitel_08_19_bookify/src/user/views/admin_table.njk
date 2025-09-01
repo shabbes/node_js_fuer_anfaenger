@@ -1,0 +1,44 @@
+{% extends "layouts:admin.njk" %}
+
+{% block content %}
+<h2>Benutzerübersicht</h2>
+<form method="GET" action="/admin/users">
+  <input type="text" name="search" placeholder="Suche nach Name oder E-Mail">
+  <button type="submit">Suchen</button>
+</form>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>E-Mail</th>
+      <th>Rolle</th>
+      <th>Erstellungsdatum</th>
+      <th>Aktion</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.createdAt | date("DD.MM.YYYY") }}</td>
+      <td style="width: 400px">
+        <div class="grid">
+            <a href="/admin/users/{{ user.id }}" role="button">Bearbeiten</a>
+            <form method="POST" action="/admin/users/{{ user.id }}" onsubmit="return confirm('Möchten Sie diesen Benutzer wirklich löschen?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="pico-background-red-500">Löschen</button>
+            </form>
+        </div>
+     </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<hr />
+
+<a href="/admin/users/create" role="button">Neuen Benutzer anlegen</a>
+{% endblock %}

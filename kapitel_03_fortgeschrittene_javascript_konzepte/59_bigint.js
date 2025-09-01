@@ -1,0 +1,3 @@
+const bigNumber = BigInt('123456789012345678901234567890');
+
+console.log(bigNumber + 1n); // Ausgabe: 123456789012345678901234567891n

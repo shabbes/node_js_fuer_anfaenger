@@ -1,0 +1,13 @@
+{% extends "layouts:default.njk" %}
+
+{% block content %}
+<h2>Willkommen bei Bookify</h2>
+<p>Willkommen auf der Startseite von Bookify!</p>
+
+<h3>Neuste Bücher</h3>
+<ul>
+  {% for book in latestBooks %}
+    <li>{{ book.title }} von {{ book.author }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

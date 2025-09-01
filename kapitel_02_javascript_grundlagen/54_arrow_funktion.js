@@ -1,0 +1,1 @@
+const greet = (name) => `Hallo, ${name}!`;

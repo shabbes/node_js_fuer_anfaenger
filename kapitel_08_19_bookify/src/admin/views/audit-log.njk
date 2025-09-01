@@ -1,0 +1,84 @@
+{% extends "layouts:admin.njk" %}
+
+{% block content %}
+<h2>Systemübersicht</h2>
+
+<div class="grid" style="margin-bottom: 2rem;">
+  <section>
+    <h3>Systeminformationen</h3>
+    <ul>
+      <li><strong>CPU-Load:</strong> {{ systemInfo.cpuLoad[0] | round(2) }}% (1 Min)</li>
+      <li><strong>RAM:</strong> {{ ((systemInfo.totalMemory - systemInfo.freeMemory) / 1024 / 1024) | round }} MB von {{ (systemInfo.totalMemory / 1024 / 1024) | round }} MB verwendet</li>
+      <li><strong>Uptime:</strong> {{ systemInfo.uptime | round }} Sekunden</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Applikationsstatistik</h3>
+    <ul>
+      <li><strong>Benutzer:</strong> {{ stats.userCount }}</li>
+      <li><strong>Administratoren:</strong> {{ stats.adminCount }}</li>
+      <li><strong>Bücher:</strong> {{ stats.bookCount }}</li>
+      <li><strong>Rezensionen:</strong> {{ stats.reviewCount }}</li>
+      <li><strong>Autoren:</strong> {{ stats.authorCount }}</li>
+    </ul>
+  </section>
+</div>
+
+<h2>Audit-Log</h2>
+
+<form method="GET" action="/admin/system" style="margin-bottom: 1rem;">
+  <input
+    type="text"
+    name="q"
+    placeholder="Suche nach Benutzer-ID, URL, IP, Aktion, Ressource"
+    value="{{ searchQuery }}"
+  />
+  <select name="method">
+    <option value="">HTTP-Methode</option>
+    <option value="GET" {% if selectedMethod == 'GET' %}selected{% endif %}>GET</option>
+    <option value="POST" {% if selectedMethod == 'POST' %}selected{% endif %}>POST</option>
+    <option value="PUT" {% if selectedMethod == 'PUT' %}selected{% endif %}>PUT</option>
+    <option value="DELETE" {% if selectedMethod == 'DELETE' %}selected{% endif %}>DELETE</option>
+  </select>
+  <button type="submit">Filtern</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Benutzer-ID</th>
+      <th>Aktion</th>
+      <th>Ressource</th>
+      <th>HTTP</th>
+      <th>URL</th>
+      <th>Body</th>
+      <th>Zeitstempel</th>
+      <th>IP</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for log in auditLogs %}
+    <tr>
+      <td>{{ log.userId }}</td>
+      <td>{{ log.action }}</td>
+      <td>{{ log.resource }}</td>
+      <td>{{ log.method }}</td>
+      <td>{{ log.url }}</td>
+      <td>
+        {% if log.body %}
+          <details>
+            <summary>Body anzeigen</summary>
+            <pre>{{ log.body | dump }}</pre>
+          </details>
+        {% else %}
+          –
+        {% endif %}
+      </td>
+      <td>{{ log.timestamp | date("DD.MM.YYYY HH:MM:ss") }} Uhr</td>
+      <td>{{ log.ipAddress }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

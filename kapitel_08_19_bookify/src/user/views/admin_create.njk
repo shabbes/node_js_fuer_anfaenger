@@ -1,0 +1,9 @@
+{% extends "layouts:admin.njk" %}
+{% from "user:admin_form.njk" import userForm %}
+{% from "error:form.njk" import formErrors %}
+
+{% block content %}
+<h2>Neuen Benutzer anlegen</h2>
+{{ formErrors(errors) }}
+{{ userForm("/admin/users", "POST", user, "Benutzer anlegen") }}
+{% endblock %}
